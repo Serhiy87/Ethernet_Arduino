@@ -6096,7 +6096,10 @@ int main(void){
 		 // Задержка в одну секунду, чтобы подождать передачу данных, а затем сбросить соединение
 		 // По истечению 1 сек, если данные не успеют отобразиться на браузере, произойдет разрыв
 		 // соединения и браузер сбросит страничку. В этом проблема этого простейшего сервера. 
-		  if(clo>=5 && rsize==0) {for(int i=0;i<5;i++) _delay_ms(200); disconnect(sockreg);  clo=0; }    
+		  if(clo>=5 && rsize==0) {
+			  for(int i=0;i<5;i++) _delay_ms(200); disconnect(sockreg);  clo=0; 
+			  }
+			  
 			if (rsize > 0) 
 			{
 			clo=0;
@@ -6135,7 +6138,7 @@ int main(void){
 				}     
 			  if(cC > 0) if (send(sockreg,buf,(nc-nn*MAX_BUF-1))==0) break; 	
 				  }
-			else  if (get0idx >= 0) 
+				else  if (get0idx >= 0) 
 			  {
 				// Create the HTTP Response	Header
 				strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\nContent-Length:24701\n\n"));
@@ -6158,7 +6161,7 @@ int main(void){
 						ii++;
 				   }     
 			  if(cC > 0) if (send(sockreg,buf,(nc-nn*MAX_BUF-1))==0) break; 	
-				  }
+				}
 			else if (risidx >= 0) 
 			  {
 				// Create the HTTP Response	Header
