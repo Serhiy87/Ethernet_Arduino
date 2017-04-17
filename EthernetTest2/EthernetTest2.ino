@@ -23,9 +23,9 @@ uint32_t _1secTimer=0;
 void setup() {
   _1secTimer=millis();
   #ifdef LOGGING
-  Serial.begin(9600);
+  
   #endif
-  Serial.begin(9600);
+Serial.begin(9600);
   Serial1.begin(9600);
   // put your setup code here, to run once:
   pinMode(13,OUTPUT);
@@ -37,7 +37,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
  // delay(1000);
-  
+ 
   if((millis()-_1secTimer)>1000)
   {
     _1secTimer=millis();

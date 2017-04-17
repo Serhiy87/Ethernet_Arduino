@@ -6,7 +6,7 @@
 #define RXBUF_BASE 0x6000
 
 //#define DEBUG
-#define SS_PIN 53
+#define SS_PIN 10
 
 
   static const uint8_t CLOSED      = 0x00;
@@ -40,7 +40,12 @@ void SPI_Init(){
 
       pinMode(MISO, INPUT);
       pinMode(SS_PIN, OUTPUT);
+      pinMode(53, OUTPUT);
+    /*   digitalWrite(SCK, HIGH);
+        digitalWrite(MISO, HIGH);
+         digitalWrite(MOSI, HIGH);*/
       digitalWrite(SS_PIN, HIGH);
+      digitalWrite(53, HIGH);
      //initSS();  
   }
 void a(){};
@@ -49,6 +54,7 @@ uint8_t SPItransfer(uint8_t data) {
     SPDR = data;
     asm volatile("nop");
     while (!(SPSR & _BV(SPIF))) ; // wait
+   
     return SPDR;
   }
 
@@ -69,15 +75,16 @@ extern void resetEthernet(void);
 noInterrupts();
  digitalWrite(SS_PIN, LOW);
   SPItransfer(0xF0);
-  SPItransfer(_addr >> 8);
+  SPItransfer(_addr >> 8); 
   SPItransfer(_addr & 0xFF);
   uint8_t sym = SPItransfer(_data);
-  if(sym!=3){
+  if(sym!=3){  
     Serial.println("RESET FROM W5100 WRITE");
     resetEthernet();
     }
 
   //resetSS();
+
   digitalWrite(SS_PIN, HIGH);
 interrupts();
   return 1;
