@@ -67,9 +67,9 @@ typedef enum SNMP_PDU_TYPES {
   SNMP_PDU_TYPES _dstType;
   uint8_t _dstIp[4];
   uint16_t _dstPort;
-  char *_getCommName;
+  const char *_getCommName;
   size_t _getSize;
-  char *_setCommName;
+  const char *_setCommName;
   size_t _setSize;
 
 typedef enum SNMP_TRAP_TYPES {
