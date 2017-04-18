@@ -6,7 +6,7 @@
 #define RXBUF_BASE 0x6000
 
 //#define DEBUG
-#define SS_PIN 53
+#define SS_PIN 12
 
 
   static const uint8_t CLOSED      = 0x00;

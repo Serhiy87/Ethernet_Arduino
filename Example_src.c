@@ -6121,24 +6121,24 @@ int main(void){
 				strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
 				strcat((char *)buf,("<A href='t.htm'>Температура в помещении</a>"));
 				// Now Send the HTTP Response
-			   if (send(sockreg,buf,strlen((char *)buf))==0) break; 
-				int cC=0,ii=0,nn=0,nc=0;
-				nc=sizeof(tex1);
-				while ( ii < nc )
-				{
-						 buf[cC]=pgm_read_byte(tex1+ii);
-						 cC++;
-					   if(cC > MAX_BUF-1)
+					   if (send(sockreg,buf,strlen((char *)buf))==0) break; 
+						int cC=0,ii=0,nn=0,nc=0;
+						nc=sizeof(tex1);
+						while ( ii < nc )
 						{
-						if (send(sockreg,buf,MAX_BUF)==0) break;
-						cC=0;
-						nn++;
-						}
-						ii++;
-				}     
-			  if(cC > 0) if (send(sockreg,buf,(nc-nn*MAX_BUF-1))==0) break; 	
+								 buf[cC]=pgm_read_byte(tex1+ii);
+								 cC++;
+							   if(cC > MAX_BUF-1)
+								{
+									if (send(sockreg,buf,MAX_BUF)==0) break;
+									cC=0;
+									nn++;
+								}
+								ii++;
+						}     
+					  if(cC > 0) if (send(sockreg,buf,(nc-nn*MAX_BUF-1))==0) break; 	
 				  }
-				else  if (get0idx >= 0) 
+			  else  if (get0idx >= 0) 
 			  {
 				// Create the HTTP Response	Header
 				strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\nContent-Length:24701\n\n"));
@@ -6154,13 +6154,13 @@ int main(void){
 						 cC++;
 					   if(cC > MAX_BUF-1)
 						{
-						if (send(sockreg,buf,MAX_BUF)==0) break;
-						cC=0;
-						nn++;
+							if (send(sockreg,buf,MAX_BUF)==0) break;
+								cC=0;
+								nn++;
 						}
 						ii++;
 				   }     
-			  if(cC > 0) if (send(sockreg,buf,(nc-nn*MAX_BUF-1))==0) break; 	
+					if(cC > 0) if (send(sockreg,buf,(nc-nn*MAX_BUF-1))==0) break; 	
 				}
 			else if (risidx >= 0) 
 			  {
@@ -6176,9 +6176,9 @@ int main(void){
 						 cC++;
 					   if(cC > MAX_BUF-1)
 						{
-						if (send(sockreg,buf,MAX_BUF)==0) break;
-						cC=0;
-						nn++;
+							if (send(sockreg,buf,MAX_BUF)==0) break;
+							cC=0;
+							nn++;
 						}
 						ii++;
 				   }     
@@ -6198,9 +6198,9 @@ int main(void){
 				 cC++;
 			   if(cC > MAX_BUF-1)
 				{
-				if (send(sockreg,buf,MAX_BUF)==0) break;
-				cC=0;
-				nn++;
+					if (send(sockreg,buf,MAX_BUF)==0) break;
+					cC=0;
+					nn++;
 				}
 				ii++;
 		   }     
@@ -6209,46 +6209,46 @@ int main(void){
 			 else if (get1idx >= 0) 
 			  {
 				// Create the HTTP Response	Header
-		strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\n\n"));
-		strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>Temperatura</title><body>\n"));
-		strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
-		strcat((char *)buf,("Температура в помещении "));
-		int	temp = temp_18b20();			
+					strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\n\n"));
+					strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>Temperatura</title><body>\n"));
+					strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
+					strcat((char *)buf,("Температура в помещении "));
+					int	temp = temp_18b20();			
 					if(temp > 1000)
 					{
 						temp = 4096 - temp;
 						temp = -temp;
 					}
-		sprintf(buf1,"= %i градусов<br><br><A href='/'>На исходную страницу</a></body></html>",temp);
-		strcat((char *)buf,buf1);
+					sprintf(buf1,"= %i градусов<br><br><A href='/'>На исходную страницу</a></body></html>",temp);
+					strcat((char *)buf,buf1);
 				// Now Send the HTTP Response
-			   if (send(sockreg,buf,strlen((char *)buf))==0) break; 	
+					if (send(sockreg,buf,strlen((char *)buf))==0) break; 	
 				  }
 			 else if (get2idx >= 0) 
 			  {
-				// Create the HTTP Response	Header
-		strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\n\n"));
-		strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>Telephone</title><body>\n"));
-		strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
-		strcat((char *)buf,("Звоню... <br><br><A href='/'>На исходную страницу</a></body></html>"));
-				// Now Send the HTTP Response
-			   if (send(sockreg,buf,strlen((char *)buf))==0) break; 
-		PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); _delay_ms(200);
-		PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); 	
+							// Create the HTTP Response	Header
+					strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\n\n"));
+					strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>Telephone</title><body>\n"));
+					strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
+					strcat((char *)buf,("Звоню... <br><br><A href='/'>На исходную страницу</a></body></html>"));
+							// Now Send the HTTP Response
+						   if (send(sockreg,buf,strlen((char *)buf))==0) break; 
+					PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); _delay_ms(200);
+					PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); 	
 			   }
 			 else if (get3idx >= 0) 
 			  {
 				// Create the HTTP Response	Header
-		strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\n\n"));
-		strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>Telephone</title><body>\n"));
-		strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
-		strcat((char *)buf,("Код подтверждения<br><br><A href='/'>На исходную страницу</a></body></html>"));
+				strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\n\n"));
+				strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>Telephone</title><body>\n"));
+				strcat((char *)buf,("<h1>Сервер на ATmega1280+W5100</h1>\r\n"));
+				strcat((char *)buf,("Код подтверждения<br><br><A href='/'>На исходную страницу</a></body></html>"));
 
-			   if (send(sockreg,buf,strlen((char *)buf))==0) break; 	
+				if (send(sockreg,buf,strlen((char *)buf))==0) break; 	
 			   }
-			  // Disconnect the socket
-		//_delay_ms(10);
-		 disconnect(sockreg); 	  
+					// Disconnect the socket
+					//_delay_ms(10);
+					 disconnect(sockreg); 	  
 				} else
 			 _delay_us(10);    // Wait for request
 			break;
@@ -6259,15 +6259,15 @@ int main(void){
       case SOCK_LAST_ACK:   
         // Force to close the socket
         close(sockreg);
-	break; 
+		break; 
     }
 		if((PINE & (1<<PE4)) == 0x00)
 		{
 		_delay_ms(250);
 		if((PINE & (1<<PE4)) == 0x00)
 		{
-		PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); _delay_ms(200);
-		PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); 
+			PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); _delay_ms(200);
+			PORTE |= (1<<PE3); _delay_ms(100); PORTE &= ~(1<<PE3); 
 		for(int i=0;i<100;i++) _delay_ms(200);
 		}
 		}

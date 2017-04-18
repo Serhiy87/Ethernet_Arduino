@@ -4,6 +4,7 @@
 #include "TEST_Automat.h"
 #include "DHCP_Automat.h"
 #include "SNMP_Automat.h"
+#include "Webserver_Automat.h"
 
 uint8_t TEST_automat(uint8_t event);
 //#include "UDPtoSerial_Automat.h"

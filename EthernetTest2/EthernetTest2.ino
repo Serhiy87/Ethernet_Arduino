@@ -1,4 +1,4 @@
-//#define LOGGING
+#define LOGGING
 #ifdef LOGGING
 //#define SNMP_Automat_LOGGING
 #define Ethernet_Automat_BEGIN_LOGGING
@@ -28,8 +28,8 @@ void setup() {
   Serial.begin(9600);
   Serial1.begin(9600);
   // put your setup code here, to run once:
-  pinMode(13,OUTPUT);
-  digitalWrite(13,LOW);
+ pinMode(10,OUTPUT);
+  digitalWrite(10,HIGH);
   Ethernet_Automat(0);
   
 }
@@ -42,6 +42,12 @@ void loop() {
   {
     _1secTimer=millis();
     Serial1.println("Hello1!");
+    if(ledstate){
+      ledstate=0;
+      }else
+      {
+      ledstate=1;        
+        }
   }
 
   Ethernet_Automat(1);
