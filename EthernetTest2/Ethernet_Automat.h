@@ -82,6 +82,7 @@ uint8_t Ethernet_Automat(uint8_t event){
         DHCP_automat(1);
         SNMP_Automat(1);
         TEST_Automat(1);
+        Webserver_Automat(1);
       break;
      }
      if(state!=stateOld){
@@ -96,6 +97,7 @@ uint8_t Ethernet_Automat(uint8_t event){
                   DHCP_automat(0);
                   SNMP_Automat(0);
                   TEST_Automat(0);
+                  Webserver_Automat(0);
             break;
           }
       }

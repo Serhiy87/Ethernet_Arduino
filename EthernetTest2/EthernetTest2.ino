@@ -2,6 +2,7 @@
 #ifdef LOGGING
 //#define SNMP_Automat_LOGGING
 #define Ethernet_Automat_BEGIN_LOGGING
+#define Webserver_Automat_LOGGING
 //#define ResetW5100_Automat_BEGIN_LOGGING
 //#define UDPbegin0_Automat_LOGGING
 #define DHCP_Automat_LOGGING
