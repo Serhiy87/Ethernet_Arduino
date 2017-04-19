@@ -2,7 +2,6 @@
 #define Webserver_Automat_h
 #include "Arduino.h"
 #include "W5100_Automat.h"
-#include <avr/pgmspace.h>
 #include <stdio.h>
 #define MAX_BUF 1024
 uint8_t buf[MAX_BUF];
@@ -66,83 +65,6 @@ String stringOne;
 uint8_t sockstat;
 uint16_t rsize;
 int getidx,get0idx,get1idx,get2idx,get3idx,risidx,ris1idx;
-int cC=0,ii=0,nn=0,nc=0;
-const char remote_display[]  PROGMEM= {
-"<HTML>\r\n"
-"<HEAD>\r\n"
-"<TITLE>KIE FSR TRP</TITLE>\r\n"
-//---------------------------------------------------------------------
-"<style type=\"text/css\">\r\n"
-"#vega {width:320px; border:2px solid black; background-color:silver; border-radius:5px; padding:20px 20px 0px 20px;text-align:center;margin:0 auto;}"
-"#wrap {display: none;opacity: 0.8;position:fixed;left:0;right: 0;top: 0;bottom: 0;padding: 16px; cursor:wait;\r\n"
-"background-color: rgba(1, 1, 1, 0.725);z-index: 100;overflow: auto;}\r\n"
-"#window {width: 200px;height: 70px;margin: 50px auto;display: none;background: #fff;\r\n"
-"z-index: 200;position: fixed;left: 0;right: 0;top: 0;bottom: 0;padding: 16px;\r\n}\r\n"
-".close {margin-left: 364px;margin-top: 4px;cursor: pointer;}\r\n"
-"input{width:45px; height:20px;}"
-"td{width:20px; height:20px; text-align:center;}"
-"</style>\r\n"
-//----------------
-"</HEAD>\r\n"
-"<BODY>\r\n"
-//---------------------
-"<script type=\"text/javascript\">\r\n"
-"function show(state){\r\n"
-"document.getElementById('window').style.display = state;\r\n"
-"document.getElementById('wrap').style.display = state;\r\n"
-"}\r\n"
-"</script>\r\n"
-"<div id=\"wrap\"></div>"
-"<div id=\"window\">Ожидание...</div>"
-
-//------------------------------------------------------------------------
-"<a href=\"index.html\"><h3>На главную</h3></a>\r\n"
-"<div id=\"vega\">"
-"<STRONG>\r\n"
-"<PRE>\r\n"
-"<SPAN id=\"display\" STYLE=\"BACKGROUND-COLOR: YELLOWGREEN; FONT-SIZE: 200%\">^^^^^^^^^^^^^^^^^^^^\r\n"
-"^^^^^^^^^^^^^^^^^^^^\r\n"
-"^^^^^^^^^^^^^^^^^^^^\r\n"
-"^^^^^^^^^^^^^^^^^^^^</SPAN>\r\n"
-"</PRE>\r\n"
-"</STRONG>\r\n"
-"<FORM action=\'/\' method=\'GET\'>\r\n"
-"<input type=\'submit\' name=\'Refresh\' value=\'Refresh\' style=\"width:70px; float:right; clear: both\" onclick=\"show(\'block\')\">"
-"<div style=\"clear:both; height:20px\" ></div>"
-"<table>"
-"<tr><td></td><td><input type=\'submit\' name=\'Start\' value=\'Start\' onclick=\"show(\'block\')\"></td><td></td><td></td><td></td><td><input type=\'submit\' name=\'Up\' value=\'&#9650\' onclick=\"show(\'block\')\"></td><td></td></tr>"
-"<tr><td></td><td></td><td></td><td></td><td><input type=\'submit\' name=\'Esc\' value=\'&#9668\' onclick=\"show(\'block\')\"></td><td></td>"
-"<td><input type=\'submit\' name=\'Enter\' value=\'&#9658\' onclick=\"show(\'block\')\"></td></tr>"
-"<tr><td></td><td><input type=\'submit\' name=\'Stop\' value=\'Stop\' onclick=\"show(\'block\')\"></td><td></td><td></td><td></td><td><input type=\'submit\' name=\'Down\' value=\'&#9660\' onclick=\"show(\'block\')\"></td><td></td></tr>"
-"</table>"
-"</FORM>\r\n"
-"<BR>\r\n"
-"</div>"
-"<SCRIPT>\r\n"
-//"list = document.getElementsByTagName(\"a\");\r\n"
-//"for(i=0;i<list.length;i++){\r\n"
-//"list[i].onclick=show(\'block\');}\r\n"
-"\t var text = document.getElementById(\"display\").firstChild.data;\r\n"
-"\t var CurX =^^^;\r\n"
-"\t var CurY =^^^;\r\n"
-"\t var CurField =^^^;\r\n"
-"\t var CurPos =^^^;\r\n"
-"\t var StrSize =^^^;\r\n"
-"\t if(CurPos!=255){StrSize=1;}\r\n"
-"\t var StartSym = CurY * 21 + CurX;\r\n"
-"\t  if(CurField!=255){\r\n"
-"\t var startstring = text.substring(0, StartSym);\r\n"
-"\t var addstring1 = \"<span style=\\\"background:red\\\">\";\r\n"
-"\t var sym = text.substring(StartSym, StartSym + StrSize);\r\n"
-"\t var addstring2 = \"</span>\";\r\n"
-"\t var endstring = text.substring(StartSym + StrSize,text.length);\r\n"
-"\t document.getElementById(\"display\").innerHTML = startstring + addstring1 + sym + addstring2 + endstring;\r\n"
-"\t }\r\n"
-"</SCRIPT>\r\n"
-"</BODY>\r\n"
-"</HTML>\r\n"
-};
-
 uint16_t Webserver_recv_size(void)
 {
   return ((W5100read(WebserverSocket_RX_RSR) & 0x00FF) << 8 ) + W5100read(WebserverSocket_RX_RSR + 1);
@@ -301,10 +223,8 @@ uint8_t Webserver_Automat(uint8_t event)
       
       case 1:
         sockstat=W5100read(WebserverSocket_SR);
-     #ifdef Webserver_Automat_LOGGING
         Serial.print("SOCKET_STATE:");
-        Serial.println(sockstat);    
-       #endif      
+        Serial.println(sockstat);        
         switch(sockstat)
         {
             case SOCK_CLOSED:
@@ -352,7 +272,7 @@ uint8_t Webserver_Automat(uint8_t event)
       break;
       
       case 5:
-          if((millis()-Timer)>10){
+          if((millis()-Timer)>500){
             Timer=millis();
             state=6;
             };
@@ -383,9 +303,8 @@ uint8_t Webserver_Automat(uint8_t event)
       case 8:
           if(rsize>0){
             state=9;
-  
             break;
-            }else{          WebserverSocket_disconnect();state=1;}
+            }else{state=1;}
      
       break;
       case 9:
@@ -404,56 +323,26 @@ uint8_t Webserver_Automat(uint8_t event)
          // getidx=strindex((char *)buf,"GET / ");
          Serial.println(stringOne.indexOf("GET /"));
           if(stringOne.indexOf("GET /")>=0){state=10;};
-          if(stringOne.indexOf("GET /favicon.ico")>=0){state=10;};
-          if(stringOne.indexOf("GET /t.htm")>=0){state=12;};
           
       break;
       case 10:
-          //strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\nContent-Length:3953\n\n"));
-          strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=utf8\n\n"));
+          strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=windows-1251\nContent-Length:3953\n\n"));
           strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>RS to Ethernet</title><body>\n"));
           strcat((char *)buf,("<h1>Вас приветствует веб интерфейс</h1>\r\n"));
-          strcat((char *)buf,("<A href='t.htm'>Температура в помещении</a>")); 
- //         sprintf(buf1,"= %i градусов<br><br><A href='/'>На исходную страницу</a></body></html>",temp);
-          strcat((char *)buf,buf1); 
-           Webserver_send(buf,strlen((char *)buf));
-          state=13;   
+          strcat((char *)buf,("<A href='t.htm'>Температура в помещении</a>"));  
+          state=11;   
       break;
       case 11:
-         
-          
-       
+          Webserver_send(buf,strlen((char *)buf));
+          state=15;
       break;
       case 12:
-          strcpy((char *)buf,("HTTP/1.0 200 OK\nContent-Type: text/html; charset=utf8\n\n"));
-          strcat((char *)buf,("<!DOCTYPE HTML>\n<html><title>RS to Ethernet</title><body>\n"));
-          strcat((char *)buf,("<h1>Температура в помещении</h1>\r\n"));
-          strcat((char *)buf,("<A href='index.htm'>На главную</a>")); 
-           
-          strcat((char *)buf,("<A href='index.htm'>На главную</a>")); 
-           Webserver_send(buf,strlen((char *)buf));
-           WebserverSocket_disconnect();
-          state=1;
-          //state=11; 
+         
+     
       break;
       case 13:
-
-        while ( ii < nc )
-          {
-             buf[cC]=pgm_read_byte_near((remote_display)+ii);
-             cC++;
-             if(cC > MAX_BUF-1)
-            {
-              if (Webserver_send(buf,MAX_BUF)==0) break;
-              cC=0;
-              nn++;
-            }
-            ii++;
-           }     
-        if(cC > 0) if (Webserver_send(buf,(nc-nn*MAX_BUF-1))==0) break; 
-        
-        WebserverSocket_disconnect();
-        state=1;
+         
+     
       break;
       case 14:
          
@@ -490,10 +379,7 @@ uint8_t Webserver_Automat(uint8_t event)
                 rsize=Webserver_recv_size();
                 clo++;
                break; 
-            case 13:
-                  cC=0,ii=0,nn=0,nc=0;
-                  nc=sizeof(remote_display);
-              break;
+
             case 255:
               break;
           }

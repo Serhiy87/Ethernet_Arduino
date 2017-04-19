@@ -839,7 +839,10 @@ SNMP_API_STAT_CODES SNMP_responsePdu(SNMP_PDU *pdu)
     _packet[_packetPos++] = pdu->VALUE.data[i];
   }
   //
+ 
   Serial.print("Remote IP:");Serial.print(_remoteIP[0]);Serial.print(", ");  Serial.print(_remoteIP[1]);Serial.print(", ");  Serial.print(_remoteIP[2]);Serial.print(", ");  Serial.print(_remoteIP[3]);Serial.println(";");
+  Serial.print("Remote PORT:");Serial.print(_snmpUdpSocket_remotePort());
+  
   _UDPtoSerialSocket_beginPacket(_remoteIP, _snmpUdpSocket_remotePort());
   _UDPtoSerialSocket_write(_packet, _packetSize);
 ///  Udp.endPacket();

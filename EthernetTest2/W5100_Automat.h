@@ -73,9 +73,8 @@ uint8_t SPItransfer(uint8_t data) {
 extern void resetEthernet(void);  
   uint8_t W5100write(uint16_t _addr, uint8_t _data)
 {
-
-noInterrupts();
- digitalWrite(SS_PIN, LOW);
+  noInterrupts();
+  digitalWrite(SS_PIN, LOW);
   SPItransfer(0xF0);
   SPItransfer(_addr >> 8); 
   SPItransfer(_addr & 0xFF);
@@ -83,12 +82,9 @@ noInterrupts();
   if(sym!=3){  
     Serial.println("RESET FROM W5100 WRITE");
     resetEthernet();
-    }
-
-  //resetSS();
-
+  }
   digitalWrite(SS_PIN, HIGH);
-interrupts();
+  interrupts();
   return 1;
 }
 
@@ -181,7 +177,7 @@ uint8_t W5100_Init(){
   W5100write(0, 0x80);
   W5100write(0x1B, 0x55);
   W5100write(0x1A, 0x55);
-    for (int i=0; i<MAX_SOCK_NUM; i++) {
+  for (int i=0; i<MAX_SOCK_NUM; i++) {
     SBASE[i] = TXBUF_BASE + SSIZE * i;
     RBASE[i] = RXBUF_BASE + RSIZE * i;
   }
